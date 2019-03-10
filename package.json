@@ -1,0 +1,54 @@
+{
+  "name": "mq-search",
+  "version": "0.0.1",
+  "description": "écoute Rabbit et construit la base Search",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "cross-env DEBUG=api:* nodemon --exec babel-node src/index.js",
+    "test": "cross-env NODE_ENV=development mocha --recursive --require @babel/register --exit \"test/test*.js\"",
+    "build": "rimraf dist && cross-env NODE_ENV=production && babel src --out-dir dist",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlueForestTrees/mq-upsert-delete.git"
+  },
+  "keywords": [
+    "rabbit",
+    "mongo"
+  ],
+  "author": "slimee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BlueForestTrees/mq-upsert-delete/issues"
+  },
+  "homepage": "https://github.com/BlueForestTrees/mq-upsert-delete#readme",
+  "dependencies": {
+    "mongo-registry": "1.0.21",
+    "simple-rbmq": "1.0.23"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.3.4",
+    "@babel/node": "7.2.2",
+    "@babel/plugin-syntax-dynamic-import": "7.2.0",
+    "@babel/plugin-transform-runtime": "7.3.4",
+    "@babel/polyfill": "7.2.5",
+    "@babel/preset-env": "7.3.4",
+    "@babel/register": "7.0.0",
+    "@babel/runtime": "7.3.4",
+    "cross-env": "5.2.0",
+    "mocha": "6.0.2",
+    "nodemon": "1.18.10",
+    "rimraf": "2.6.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime",
+      "@babel/plugin-syntax-dynamic-import"
+    ]
+  }
+}
