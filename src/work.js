@@ -1,5 +1,5 @@
 export const upsert = type => (doc, db) => {
-    doc.type = type
+    doc.searchType = type
     return db.updateOne(
         {_id: doc._id},
         {$set: doc},
