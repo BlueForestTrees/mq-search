@@ -1,29 +1,14 @@
 import ENV from "./env"
 import {dbInit, col} from "mongo-registry"
 import {initRabbit, createReceiver} from "simple-rbmq"
+import {del, upsert} from "./work"
+
+const upsertJob = name => ({work: upsert(name), routingKey: `${name}-upsert`, queue: {...ENV.QUEUE, name: `${name}-upsert-search`}})
+const delJob = name => ({work: del(name), routingKey: `${name}-delete`, queue: {...ENV.QUEUE, name: `${name}-delete-search`}})
 
 dbInit(ENV)
     .then(() => initRabbit(ENV.RB))
     .then(() => col(ENV.DB_COLLECTION))
-    .then(db => Promise.all([
-        initRobot("upsert-trunk", db, upsert),
-        initRobot("delete-trunk", db, del)
-    ]))
-
-const initRobot = (routingKey, queueName, db, work) =>
-    createReceiver(
-        ENV.RB.exchange,
-        routingKey,
-        {...ENV.QUEUE, name: queueName},
-        msg => work(msg, db)
-    )
-
-const upsert = (doc, db) => db.updateOne(
-    {_id: doc._id},
-    {$set: doc},
-    {upsert: true}
-)
-
-const del = (doc, db) => db.deleteOne(
-    {_id: doc._id}
-)
+    .then(db => Promise.all(ENV.JOBS.map(upsertJob).concat(ENV.JOBS.map(delJob))
+        .map(({routingKey, queue, work}) => createReceiver(ENV.RB.exchange, routingKey, queue, msg => work(msg, db)))))
+    .catch(console.error)

@@ -2,6 +2,7 @@ import {version} from './../package.json'
 import fs from "fs"
 
 const ENV = {
+    NAME: "search",
     NODE_ENV: process.env.NODE_ENV || null,
     VERSION: version,
 
@@ -15,13 +16,15 @@ const ENV = {
 
     RB_PATH: process.env.RB_PATH || "mq.json",
     QUEUE_PATH: process.env.QUEUE_PATH || "queue.json",
+    JOBS_PATH: process.env.JOBS_PATH || "jobs.json",
 }
 
 ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))
 ENV.QUEUE = JSON.parse(fs.readFileSync(ENV.QUEUE_PATH, 'utf8'))
+ENV.JOBS = JSON.parse(fs.readFileSync(ENV.JOBS_PATH, 'utf8'))
 
 
-const debug = require('debug')(`api:mq-${ENV.NAME}`)
+const debug = require('debug')(`api:mq-search`)
 
 debug({ENV})
 
