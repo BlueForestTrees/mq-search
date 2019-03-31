@@ -17,11 +17,13 @@ const ENV = {
     RB_PATH: process.env.RB_PATH || "mq.json",
     QUEUE_PATH: process.env.QUEUE_PATH || "queue.json",
     JOBS_PATH: process.env.JOBS_PATH || "jobs.json",
+    SUBJOBS_PATH: process.env.SUBJOBS_PATH || "subjobs.json",
 }
 
 ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))
 ENV.QUEUE = JSON.parse(fs.readFileSync(ENV.QUEUE_PATH, 'utf8'))
 ENV.JOBS = JSON.parse(fs.readFileSync(ENV.JOBS_PATH, 'utf8'))
+ENV.SUBJOBS = JSON.parse(fs.readFileSync(ENV.SUBJOBS_PATH, 'utf8'))
 
 
 const debug = require('debug')(`api:mq-search`)
