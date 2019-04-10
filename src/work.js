@@ -1,9 +1,6 @@
 export const del = () => (doc, db) => db.deleteOne({_id: doc._id})
 
-export const delSub = fragment => (doc, db) => {
-    console.log({_id: doc.trunkId}, {$pull: {[fragment]: {_id: doc._id}}})
-    return db.updateOne({_id: doc.trunkId}, {$pull: {[fragment]: {_id: doc._id}}})
-}
+export const delSub = fragment => (doc, db) => db.updateOne({_id: doc.trunkId}, {$pull: {[fragment]: {_id: doc._id}}})
 
 export const upsert = type => (doc, db) => {
     doc.searchType = type
