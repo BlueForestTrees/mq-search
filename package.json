@@ -1,6 +1,6 @@
 {
   "name": "mq-search",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "écoute Rabbit et construit la base Search",
   "main": "dist/index.js",
   "scripts": {
@@ -24,8 +24,9 @@
   },
   "homepage": "https://github.com/BlueForestTrees/mq-upsert-delete#readme",
   "dependencies": {
+    "debug": "4.1.1",
     "mongo-registry": "1.0.21",
-    "simple-rbmq": "1.0.25"
+    "simple-rbmq": "2.0.2"
   },
   "devDependencies": {
     "@babel/cli": "7.2.3",
