@@ -15,11 +15,11 @@ export const upsertSub = fragment => {
     const fragmentId = `${fragment}._id`
     const fragment$ = `${fragment}.$`
     return async (doc, db) => {
-        const updateResult = await db.updateOne({_id: doc.trunkId, [fragmentId]: doc._id}, {$set: {[fragment$]: doc}})
-        const nothingUpdated = updateResult.matchedCount === 0
-        if (nothingUpdated) {
-            return db.updateOne({_id: doc.trunkId}, {$push: {[fragment]: doc}})
+        const pushResult = db.updateOne({_id: doc.trunkId}, {$push: {[fragment]: doc}})
+        if (pushResult.nMatched === 0) {
+            return await db.updateOne({_id: doc.trunkId, [fragmentId]: doc._id}, {$set: {[fragment$]: doc}})
+        } else {
+            return pushResult
         }
-        return updateResult
     }
 }
